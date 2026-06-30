@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Happy Birthday 🌹</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --rose:#ff4d8d;
+  --rose2:#ff1a6b;
+  --rose-dim:rgba(255,77,141,0.25);
+  --gold:#f0c060;
+  --petal:#fff0f5;
+  --bg:#0d0009;
+}
+
+html,body{width:100%;height:100%;overflow:hidden;touch-action:manipulation}
+
+body{
+  background:var(--bg);
+  font-family:'DM Sans',sans-serif;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;min-height:100dvh;
+}
+
+/* ── AMBIENT ORBS ── */
+.orbs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.orb{
+  position:absolute;border-radius:50%;
+  filter:blur(80px);opacity:0.45;
+  animation:drift ease-in-out infinite alternate;
+}
+.orb1{width:320px;height:320px;background:#6b003a;top:-80px;left:-60px;animation-duration:9s}
+.orb2{width:260px;height:260px;background:#3d0020;bottom:-60px;right:-40px;animation-duration:11s;animation-delay:-4s}
+.orb3{width:180px;height:180px;background:#7a1040;top:40%;left:60%;animation-duration:7s;animation-delay:-2s}
+@keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(30px,20px) scale(1.12)}}
+
+/* ── SCREENS ── */
+.screen{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;z-index:10;
+  transition:opacity .65s cubic-bezier(.4,0,.2,1),transform .65s cubic-bezier(.4,0,.2,1);
+}
+.screen.out{opacity:0;pointer-events:none;transform:scale(.94) translateY(-10px)}
+
+/* ── GLASS CARD ── */
+.card{
+  position:relative;
+  background:linear-gradient(145deg,rgba(60,10,30,.72),rgba(20,4,12,.85));
+  backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+  border:1px solid rgba(255,100,150,.2);
+  border-radius:32px;
+  padding:40px 28px 36px;
+  width:100%;max-width:400px;
+  text-align:center;
+  box-shadow:
+    0 0 0 1px rgba(255,77,141,.06) inset,
+    0 2px 40px rgba(255,30,100,.12),
+    0 8px 80px rgba(0,0,0,.6);
+  animation:cardIn .8s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes cardIn{from{opacity:0;transform:translateY(28px) scale(.96)}to{opacity:1;transform:none}}
+
+/* ── BIRTHDAY SCREEN ── */
+.bday-cake{
+  font-size:72px;display:block;margin-bottom:8px;
+  animation:cakePop .7s cubic-bezier(.34,1.56,.64,1) .2s both;
+  filter:drop-shadow(0 0 20px rgba(240,192,96,.6));
+}
+@keyframes cakePop{from{transform:scale(0) rotate(-20deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+
+.bday-label{
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
+  font-size:clamp(18px,5vw,24px);color:var(--gold);
+  letter-spacing:.12em;margin-bottom:4px;opacity:.9;
+}
+.bday-name{
+  font-family:'Cormorant Garamond',serif;font-weight:600;
+  font-size:clamp(36px,11vw,58px);color:var(--petal);
+  line-height:1.05;margin-bottom:20px;
+  text-shadow:0 0 40px rgba(255,120,160,.4);
+}
+.bday-msg{
+  font-size:clamp(13px,3.5vw,15px);
+  color:rgba(255,240,245,.5);line-height:1.8;
+  font-weight:300;margin-bottom:28px;
+}
+.bday-divider{
+  width:1px;height:40px;
+  background:linear-gradient(to bottom,transparent,rgba(255,77,141,.5),transparent);
+  margin:0 auto 20px;
+}
+
+/* ── ROSE LURE ── */
+.rose-wrap{
+  display:inline-block;cursor:pointer;
+  margin-bottom:16px;position:relative;
+  -webkit-tap-highlight-color:transparent;
+}
+.rose-emoji{
+  font-size:72px;display:block;
+  filter:drop-shadow(0 0 22px rgba(255,60,120,.7));
+  animation:breathe 2.8s ease-in-out infinite;
+  transform-origin:50% 80%;
+  transition:transform .08s ease-out;
+  will-change:transform;
+}
+@keyframes breathe{
+  0%,100%{transform:scale(1) rotate(-4deg)}
+  30%{transform:scale(1.1) rotate(4deg)}
+  60%{transform:scale(1.06) rotate(-2deg)}
+}
+/* pulse ring behind rose */
+.rose-ring{
+  position:absolute;inset:-14px;border-radius:50%;
+  border:2px solid rgba(255,77,141,.35);
+  animation:ringPulse 2.8s ease-in-out infinite;
+}
+.rose-ring2{
+  position:absolute;inset:-26px;border-radius:50%;
+  border:1px solid rgba(255,77,141,.18);
+  animation:ringPulse 2.8s ease-in-out infinite .5s;
+}
+@keyframes ringPulse{
+  0%,100%{transform:scale(.9);opacity:.6}
+  50%{transform:scale(1.08);opacity:1}
+}
+.rose-hint{
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,220,235,.35);
+  animation:hintPulse 2s ease-in-out infinite;
+  display:block;margin-top:4px;
+}
+@keyframes hintPulse{0%,100%{opacity:.25}50%{opacity:.75}}
+
+/* ── PROPOSAL SCREEN ── */
+.proposal-rose{
+  font-size:64px;display:block;margin-bottom:14px;
+  filter:drop-shadow(0 0 18px rgba(255,60,120,.65));
+  animation:roseSway 3s ease-in-out infinite;
+}
+@keyframes roseSway{0%,100%{transform:rotate(-4deg) scale(1)}50%{transform:rotate(4deg) scale(1.07)}}
+
+.prop-label{
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
+  font-size:clamp(14px,4vw,18px);color:rgba(255,220,235,.55);
+  letter-spacing:.06em;margin-bottom:8px;
+}
+.prop-headline{
+  font-family:'Cormorant Garamond',serif;font-weight:600;
+  font-size:clamp(28px,8vw,44px);color:var(--petal);
+  line-height:1.15;margin-bottom:24px;
+  text-shadow:0 0 30px rgba(255,100,150,.3);
+}
+.prop-headline .gold{color:var(--gold)}
+
+.line{
+  width:48px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--rose),transparent);
+  margin:0 auto 22px;
+}
+
+.question{
+  font-family:'Cormorant Garamond',serif;font-weight:400;
+  font-size:clamp(24px,7.5vw,38px);color:var(--petal);
+  min-height:50px;margin-bottom:32px;line-height:1.25;
+}
+.cursor-blink{
+  display:inline-block;width:2px;height:1em;
+  background:var(--rose);vertical-align:text-bottom;
+  animation:blink .7s step-end infinite;
+  margin-left:2px;border-radius:1px;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* ── YES BUTTON — small quiet secondary ── */
+.btn-yes{
+  position:relative;overflow:hidden;
+  font-family:'Cormorant Garamond',serif;font-weight:400;
+  font-size:clamp(13px,3.5vw,15px);
+  padding:10px 28px;border-radius:60px;cursor:pointer;
+  background:transparent;
+  color:rgba(255,200,220,.5);
+  border:1px solid rgba(255,120,160,.2);
+  letter-spacing:.1em;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  transition:color .2s,border-color .2s,transform .15s;
+  display:block;margin:0 auto 0;
+}
+.btn-yes:active{transform:scale(.96);color:rgba(255,200,220,.8)}
+/* ripple on tap */
+.ripple{
+  position:absolute;border-radius:50%;
+  background:rgba(255,255,255,.15);
+  transform:scale(0);animation:rippleAnim .55s linear;
+  pointer-events:none;
+}
+@keyframes rippleAnim{to{transform:scale(4);opacity:0}}
+
+/* ── NOPE BUTTON — big glowing primary ── */
+#no-btn{
+  position:fixed;z-index:999;
+  font-family:'Cormorant Garamond',serif;font-weight:600;
+  font-size:clamp(18px,5vw,22px);letter-spacing:.08em;
+  padding:16px 44px;
+  border-radius:60px;cursor:pointer;
+  background:linear-gradient(135deg,#ff4d8d,#e0105a,#ff4d8d);
+  background-size:200% 100%;
+  color:#fff;
+  border:none;
+  display:none;
+  overflow:hidden;
+  transition:left .5s cubic-bezier(.34,1.56,.64,1),top .5s cubic-bezier(.34,1.56,.64,1);
+  /* shimmer sweep */
+  animation:nopeShimmer 3s linear infinite, nopePulse 2.4s ease-in-out infinite;
+}
+@keyframes nopeShimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+#no-btn::after{
+  content:'';position:absolute;inset:0;border-radius:60px;
+  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.22) 50%,transparent 60%);
+  transform:translateX(-100%);pointer-events:none;
+}
+#no-btn:active::after{animation:nopeShine .4s ease forwards}
+@keyframes nopeShine{to{transform:translateX(100%)}}
+@keyframes nopePulse{
+  0%,100%{box-shadow:0 4px 20px rgba(255,30,100,.55),0 0 0 1px rgba(255,120,160,.3) inset,0 0 28px rgba(255,77,141,.25)}
+  50%{box-shadow:0 4px 32px rgba(255,30,100,.75),0 0 0 1px rgba(255,160,190,.45) inset,0 0 52px rgba(255,77,141,.45)}
+}
+/* bounce-away keyframe triggered by JS class */
+@keyframes bounceAway{
+  0%  {transform:scale(1) rotate(0deg)}
+  15% {transform:scale(1.25) rotate(-14deg)}
+  35% {transform:scale(.88) rotate(10deg)}
+  55% {transform:scale(1.1) rotate(-5deg)}
+  75% {transform:scale(.96) rotate(2deg)}
+  100%{transform:scale(1) rotate(0deg)}
+}
+#no-btn.bouncing{animation:bounceAway .5s cubic-bezier(.36,.07,.19,.97) forwards}
+
+/* ── VICTORY ── */
+.victory{
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  animation:popIn .65s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes popIn{from{opacity:0;transform:scale(.65)}to{opacity:1;transform:scale(1)}}
+.v-ring{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;
+  width:110px;height:110px;margin-bottom:4px;
+}
+.v-ring::before,.v-ring::after{
+  content:'';position:absolute;inset:0;border-radius:50%;border:2px solid;
+  animation:vRing 1.8s ease-in-out infinite;
+}
+.v-ring::before{border-color:rgba(240,192,96,.5);animation-delay:0s}
+.v-ring::after{border-color:rgba(255,77,141,.4);animation-delay:.3s;inset:-10px}
+@keyframes vRing{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.1);opacity:1}}
+.v-emoji{font-size:72px;filter:drop-shadow(0 0 22px rgba(240,192,96,.8));animation:vBounce .75s ease-in-out infinite alternate}
+@keyframes vBounce{from{transform:translateY(0)}to{transform:translateY(-10px)}}
+.v-title{
+  font-family:'Cormorant Garamond',serif;font-weight:600;font-style:italic;
+  font-size:clamp(28px,9vw,44px);color:var(--gold);line-height:1.1;
+  text-shadow:0 0 24px rgba(240,192,96,.5);
+}
+.v-sub{
+  font-size:clamp(13px,3.5vw,15px);color:rgba(255,180,210,.65);
+  font-weight:300;line-height:1.75;letter-spacing:.04em;
+}
+
+/* ── CONFETTI ── */
+.cp{position:fixed;pointer-events:none;z-index:9999;border-radius:3px}
+@keyframes cpFall{
+  0%  {opacity:1;transform:translateY(0) rotate(0deg) scale(1)}
+  80% {opacity:1}
+  100%{opacity:0;transform:translateY(var(--fall)) rotate(var(--rot)) scale(.4)}
+}
+
+/* ── PETAL ── */
+.petal{position:absolute;top:-50px;user-select:none;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{
+  0%  {transform:translateY(0) rotate(0deg);opacity:.9}
+  50% {transform:translateY(50vh) rotate(180deg) translateX(18px)}
+  100%{transform:translateY(115vh) rotate(370deg) translateX(-12px);opacity:.15}
+}
+</style>
+</head>
+<body>
+
+<div class="orbs">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+</div>
+
+<div id="petal-layer" style="position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden"></div>
+
+<!-- ══ SCREEN 1: BIRTHDAY ══ -->
+<div class="screen" id="s-bday">
+  <div class="card">
+    <span class="bday-cake">🎂</span>
+    <p class="bday-label">Happy Birthday</p>
+    <p class="bday-name" id="typed-name"></p>
+    <p class="bday-msg">
+      Every single day with you<br>
+      is my favourite day —<br>
+      but today is yours. 🌸
+    </p>
+    <div class="bday-divider"></div>
+
+    <!-- Lure rose -->
+    <div class="rose-wrap" id="rose-wrap">
+      <div class="rose-ring"></div>
+      <div class="rose-ring2"></div>
+      <span class="rose-emoji" id="lure-rose">🌹</span>
+    </div>
+    <span class="rose-hint">touch the rose</span>
+  </div>
+</div>
+
+<!-- ══ SCREEN 2: PROPOSAL ══ -->
+<div class="screen out" id="s-proposal">
+  <div class="card">
+    <span class="proposal-rose">🌹</span>
+    <p class="prop-label">and on your birthday…</p>
+    <h1 class="prop-headline">I have <span class="gold">one more</span><br>thing to say</h1>
+    <div class="line"></div>
+    <p class="question" id="q-text"><span class="cursor-blink"></span></p>
+    <div id="btn-area" style="display:none">
+      <button class="btn-yes" id="yes-btn">yes, forever 🌹</button>
+    </div>
+  </div>
+</div>
+
+<!-- Nope roams free as primary CTA -->
+<button id="no-btn">Nope 🙅</button>
+
+<!-- ══ SCREEN 3: VICTORY ══ -->
+<div class="screen out" id="s-victory">
+  <div class="card">
+    <div class="victory">
+      <div class="v-ring"><span class="v-emoji">💍</span></div>
+      <p class="v-title">She said YES! 🌹</p>
+      <p class="v-sub">Best birthday in history.<br>And they lived happily ever after… 🌸</p>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══ PETALS ══ */
+const PETALS=['🌸','🌹','🌷','🌺','🪷'];
+const petalLayer=document.getElementById('petal-layer');
+function spawnPetal(){
+  const p=document.createElement('div');
+  p.className='petal';
+  p.textContent=PETALS[Math.floor(Math.random()*PETALS.length)];
+  p.style.left=(Math.random()*108)+'vw';
+  p.style.fontSize=(13+Math.random()*17)+'px';
+  const d=5+Math.random()*6, dl=Math.random()*4;
+  p.style.animationDuration=d+'s';
+  p.style.animationDelay=dl+'s';
+  petalLayer.appendChild(p);
+  setTimeout(()=>p.remove(),(d+dl+.5)*1000);
+}
+for(let i=0;i<18;i++)setTimeout(spawnPetal,i*200);
+setInterval(spawnPetal,600);
+
+/* ══ NAME TYPEWRITER ══ */
+const NAME='my love'; // ← change her name here!
+const nameEl=document.getElementById('typed-name');
+let ni=0;
+function typeName(){if(ni<=NAME.length){nameEl.textContent=NAME.slice(0,ni++);setTimeout(typeName,95)}}
+setTimeout(typeName,500);
+
+/* ══ ROSE LURE – follows touch / mouse ══ */
+const lureRose=document.getElementById('lure-rose');
+const roseWrap=document.getElementById('rose-wrap');
+let tiltX=0,tiltY=0,animPaused=false;
+
+function applyTilt(nx,ny){
+  // normalise to -1..1 relative to viewport centre
+  const cx=window.innerWidth/2, cy=window.innerHeight/2;
+  const dx=(nx-cx)/(cx);
+  const dy=(ny-cy)/(cy);
+  // lean toward finger: rotate up to 22deg
+  tiltX=dy*22; tiltY=-dx*22;
+  lureRose.style.animation='none';
+  lureRose.style.transform=`rotate(${tiltY}deg) scale(1.08)`;
+}
+
+roseWrap.addEventListener('mousemove',e=>{applyTilt(e.clientX,e.clientY)});
+roseWrap.addEventListener('mouseleave',()=>{
+  lureRose.style.animation='';
+  lureRose.style.transform='';
+});
+document.addEventListener('touchmove',e=>{
+  const t=e.touches[0];applyTilt(t.clientX,t.clientY);
+},{passive:true});
+document.addEventListener('touchend',()=>{
+  lureRose.style.animation='';
+  lureRose.style.transform='';
+},{passive:true});
+
+/* tap rose → go to proposal */
+function goProposal(){
+  document.getElementById('s-bday').classList.add('out');
+  const sp=document.getElementById('s-proposal');
+  sp.classList.remove('out');
+  setTimeout(startTypewriter,550);
+}
+roseWrap.addEventListener('click',goProposal);
+roseWrap.addEventListener('touchend',e=>{e.preventDefault();goProposal();},{passive:false});
+
+/* ══ PROPOSAL TYPEWRITER ══ */
+const Q='Will you marry me? 💍';
+const qEl=document.getElementById('q-text');
+const btnArea=document.getElementById('btn-area');
+const noBtn=document.getElementById('no-btn');
+const yesBtn=document.getElementById('yes-btn');
+let qi=0,cursorEl;
+
+function startTypewriter(){
+  qEl.innerHTML='';
+  cursorEl=document.createElement('span');
+  cursorEl.className='cursor-blink';
+  qEl.appendChild(cursorEl);
+  typeQ();
+}
+function typeQ(){
+  if(qi<=Q.length){
+    qEl.textContent=Q.slice(0,qi++);
+    const c=document.createElement('span');
+    c.className='cursor-blink';
+    qEl.appendChild(c);
+    setTimeout(typeQ,qi<4?160:68);
+  } else {
+    qEl.textContent=Q;
+    btnArea.style.display='block';
+    setTimeout(placeNope,120);
+  }
+}
+
+/* ══ NOPE BUTTON ══ */
+let nopePlaced=false;
+function placeNope(){
+  /* Nope: centred horizontally, about 65% down the screen */
+  const bw=noBtn.offsetWidth||130;
+  const nx=(window.innerWidth/2)-(bw/2);
+  const ny=window.innerHeight*0.65;
+  noBtn.style.left=nx+'px';
+  noBtn.style.top=ny+'px';
+  noBtn.style.display='block';
+  nopePlaced=true;
+}
+
+function nopeRunAway(e){
+  if(e&&e.cancelable)e.preventDefault();
+  if(!nopePlaced)return;
+
+  /* remove then re-add class to restart animation */
+  noBtn.classList.remove('bouncing');
+  void noBtn.offsetWidth;
+  noBtn.classList.add('bouncing');
+
+  /* fly to random safe spot */
+  const bw=noBtn.offsetWidth||110, bh=noBtn.offsetHeight||46;
+  const margin=18;
+  const maxX=window.innerWidth-bw-margin;
+  const maxY=window.innerHeight-bh-margin;
+  const nx=margin+Math.random()*maxX;
+  const ny=margin+Math.random()*maxY;
+  noBtn.style.left=nx+'px';
+  noBtn.style.top=ny+'px';
+}
+
+noBtn.addEventListener('click',nopeRunAway);
+noBtn.addEventListener('touchend',nopeRunAway,{passive:false});
+
+/* YES – ripple + victory */
+function addRipple(e,el){
+  const r=el.getBoundingClientRect();
+  const rip=document.createElement('span');
+  rip.className='ripple';
+  const sz=Math.max(r.width,r.height)*2;
+  rip.style.width=rip.style.height=sz+'px';
+  const cx=(e.touches?e.touches[0].clientX:e.clientX)-r.left-sz/2;
+  const cy=(e.touches?e.touches[0].clientY:e.clientY)-r.top-sz/2;
+  rip.style.left=cx+'px'; rip.style.top=cy+'px';
+  el.appendChild(rip);
+  setTimeout(()=>rip.remove(),600);
+}
+
+function showVictory(e){
+  addRipple(e,yesBtn);
+  setTimeout(()=>{
+    document.getElementById('s-proposal').classList.add('out');
+    noBtn.style.display='none';
+    document.getElementById('s-victory').classList.remove('out');
+    launchConfetti();
+    for(let i=0;i<40;i++)setTimeout(spawnPetal,i*45);
+  },200);
+}
+yesBtn.addEventListener('click',showVictory);
+yesBtn.addEventListener('touchend',e=>{e.preventDefault();showVictory(e);},{passive:false});
+
+/* ══ CONFETTI ══ */
+function launchConfetti(){
+  const cols=['#ff4d8d','#f0c060','#fff0f5','#ff1a6b','#ffa0c8','#c0f060','#80e0ff'];
+  for(let i=0;i<100;i++){
+    const el=document.createElement('div');
+    el.className='cp';
+    const sz=6+Math.random()*8;
+    el.style.width=sz+'px'; el.style.height=sz+'px';
+    el.style.background=cols[Math.floor(Math.random()*cols.length)];
+    el.style.left=(5+Math.random()*90)+'vw';
+    el.style.top=(-5+Math.random()*25)+'vh';
+    const fall=(55+Math.random()*45)+'vh';
+    const rot=(Math.random()*720*(Math.random()<.5?1:-1))+'deg';
+    el.style.setProperty('--fall',fall);
+    el.style.setProperty('--rot',rot);
+    el.style.animationName='cpFall';
+    el.style.animationDuration=(2+Math.random()*1.5)+'s';
+    el.style.animationDelay=(Math.random()*.9)+'s';
+    el.style.animationTimingFunction='cubic-bezier(.25,.46,.45,.94)';
+    el.style.animationFillMode='forwards';
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),4500);
+  }
+}
+</script>
+</body>
+</html>
