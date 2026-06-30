@@ -480,31 +480,42 @@ noBtn.addEventListener('click',nopeRunAway);
 noBtn.addEventListener('touchend',nopeRunAway,{passive:false});
 
 /* YES – ripple + victory */
-function addRipple(e,el){
-  const r=el.getBoundingClientRect();
-  const rip=document.createElement('span');
-  rip.className='ripple';
-  const sz=Math.max(r.width,r.height)*2;
-  rip.style.width=rip.style.height=sz+'px';
-  const cx=(e.touches?e.touches[0].clientX:e.clientX)-r.left-sz/2;
-  const cy=(e.touches?e.touches[0].clientY:e.clientY)-r.top-sz/2;
-  rip.style.left=cx+'px'; rip.style.top=cy+'px';
-  el.appendChild(rip);
-  setTimeout(()=>rip.remove(),600);
-}
+let yesDone=false;
 
 function showVictory(e){
-  addRipple(e,yesBtn);
+  if(yesDone)return;
+  yesDone=true;
+
+  /* ripple from touch or click point */
+  try{
+    const r=yesBtn.getBoundingClientRect();
+    const rip=document.createElement('span');
+    rip.className='ripple';
+    const sz=Math.max(r.width,r.height)*2;
+    rip.style.width=rip.style.height=sz+'px';
+    /* changedTouches works on touchend; fall back to clientX for click */
+    const src=(e.changedTouches&&e.changedTouches[0])||e;
+    rip.style.left=(src.clientX-r.left-sz/2)+'px';
+    rip.style.top =(src.clientY-r.top -sz/2)+'px';
+    yesBtn.appendChild(rip);
+    setTimeout(()=>rip.remove(),600);
+  }catch(_){}
+
   setTimeout(()=>{
     document.getElementById('s-proposal').classList.add('out');
     noBtn.style.display='none';
     document.getElementById('s-victory').classList.remove('out');
     launchConfetti();
     for(let i=0;i<40;i++)setTimeout(spawnPetal,i*45);
-  },200);
+  },180);
 }
+
+yesBtn.addEventListener('touchend',function(e){
+  e.preventDefault();
+  e.stopPropagation();
+  showVictory(e);
+},{passive:false});
 yesBtn.addEventListener('click',showVictory);
-yesBtn.addEventListener('touchend',e=>{e.preventDefault();showVictory(e);},{passive:false});
 
 /* ══ CONFETTI ══ */
 function launchConfetti(){
